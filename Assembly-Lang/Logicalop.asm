@@ -39,14 +39,14 @@ Xorop:
   PutLInt ecx
   nwln
 Notop:
-  mov      edx, eax       ;Another way to do ebx := NOT eax;
+  mov      edx, eax      
   xor      edx, 1
   mov      ecx, edx
   PutStr nota_line
   PutLInt ecx
   nwln
 
-  mov      edx, ebx       ;Another way to do ebx := NOT eax;
+  mov      edx, ebx       
   xor      edx, 1
   mov      ecx, edx
   PutStr notb_line
