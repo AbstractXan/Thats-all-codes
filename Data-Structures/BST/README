@@ -1,0 +1,44 @@
+The following files are included in the program-
+
+==========================================================
+BST.h 		|	Header file for the Binary Search Tree
+----------------------------------------------------------
+	Node structure are defined here
+	BST functions like the class constructor, insert , recursive insert, merge, inorder, getroot and getcount function prototypes are defined here.
+	
+	
+	
+==========================================================
+BST.cpp		| 	All the BST ADT functions are defined here
+----------------------------------------------------------
+	Provides implementation for the prototypes in BST.h
+	
+	
+	
+=================================================================================
+main.cpp 	|	Includes files t1.txt and t2.txt which contain the nodes of trees
+---------------------------------------------------------------------------------
+	> The code creates two BST Tree objects 'a' and 'b'.
+	> The corresponding files for both the trees are read from "t1.txt" and "t2.txt".
+	> The code outputs the inorder for both trees.
+	> The code then figures out which tree has more data and merges the smaller tree with the bigger tree and destroys the smaller tree.
+	> Code Recursively calls merge to insert numbers in inorder (ascending) fashion to the other tree
+	
+	
+	
+=================================================================================
+t1.txt	|	Includes data for tree 'a'
+---------------------------------------------------------------------------------
+
+
+
+=================================================================================
+t2.txt 	|	Includes data for tree 'b'
+---------------------------------------------------------------------------------
+	
+	
+===================================================	
+Efficiency:
+===================================================
+> The program calls merge on the bigger tree such that lesser number of insert calls and traversals will be done because of the smaller tree.
+> The program automatically deletes the smaller tree in parallel when the two trees are merged and thus we need not traverse through the tree again to delete it. 
