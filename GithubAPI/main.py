@@ -3,21 +3,19 @@ import json
 import time
 import base64
 import os
+import datetime
+
+AheadUCT=19800 #If your Local time is ahead UCT (in sec)
 
 ##curr_dir = os.getcwd();
 ##print curr_dir
 
 rawrequest =req.get('https://api.github.com/search/repositories?q=language:java&sort=stars')
 datajson = rawrequest.json()
-
-
-
-#
 temp1 = datajson['items']
 
 #Contains repos names
 repos = []
-
 #Prints and stores repositories names
 for i in temp1:
     #print i['full_name']
@@ -44,7 +42,13 @@ for rep_name in repos:
         repos_request = req.get(repos_url)
 
         while(int(repos_request.status_code)!=200):
-            time.sleep(2)
+            ratereq=(req.get('https://api.github.com/rate_limit') ).json()
+            date=float(ratereq['resources']['search']['reset'])
+            print('reset time: ', datetime.datetime.fromtimestamp(date).strftime('%Y-%m-%d %H:%M:%S'))
+            print('curr time: ', datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+            
+            
+            time.sleep(date-time.time()+AheadUCT)
             repos_request = req.get(repos_url)
 
         print(repos_request.headers['X-RateLimit-Remaining'])
@@ -55,24 +59,24 @@ for rep_name in repos:
         code_url_list = repos_request_json['items']
         for j in code_url_list:
             code_url=(j['git_url'])
-            code_req=req.get(code_url)
-            code_request_json=code_req.json()
-            code=base64.b64decode(code_request_json['content'])
-            
-            code_name=j['name']
-            
-            #Writes code files
-            with open(code_name, 'w') as file:
-                file.write(code)
-        
+            #print(code_url)
+
+##            code_req=req.get(code_url)
+##            code_request_json=code_req.json()
+##            code=base64.b64decode(code_request_json['content'])
+##            
+##            code_name=j['name']
+##            
+##            #Writes code files
+##            with open(code_name, 'w') as file:
+##                file.write(code)
+##        
             
     except Exception as e:
         print(str(e))
-        print (repos_request_json['message'])
+        #print (repos_request_json['message'])
         continue
     
     
-
-
 
 
