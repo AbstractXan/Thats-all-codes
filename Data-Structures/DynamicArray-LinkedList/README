@@ -1,1 +1,22 @@
+Priyansh Sangule
+
+CS16B021
+
+How to run the project:
+
+$ make
+$ ./phone
+
+Files included in the project:
+> Directory.h 	: Directory header file
+> Directory.cpp : Contains all the functions for Directory ADT
+> main.cpp	: For user interaction and inputs
+> directory.txt : 
+
+Logic:
+Directory is a dynamic array of root node pointers and the root node pointers are further connected to data node linked list.
+
+Salient features:
+> Commit prompts are given to user such that commits/rollbacks are possible.
+> Directory is a dynamic array. Thus extending array is easier.
 
