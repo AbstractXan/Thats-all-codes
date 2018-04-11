@@ -7,8 +7,8 @@ import datetime
 
 AheadUCT=19800 #If your Local time is ahead UCT (in sec)
 
-##curr_dir = os.getcwd();
-##print curr_dir
+curr_dir = os.getcwd();
+print curr_dir
 
 rawrequest =req.get('https://api.github.com/search/repositories?q=language:java&sort=stars')
 datajson = rawrequest.json()
@@ -23,15 +23,16 @@ for i in temp1:
 
 #Acceses code in repository
 for rep_name in repos:       
-##    try:
+    try:
 ##
 ##        #Change directory to add codes for each repositories
-##        os.mkdir(str(rep_name))
-##        os.chdir(curr_dir+'/'+str(rep_name))
-##        print os.getcwd()
-##    except Exception as ex:
-##        print(str(ex))
-##        break
+        os.chdir(curr_dir)
+        os.mkdir(str(rep_name).replace("/",""))
+        os.chdir(curr_dir+'/'+str(rep_name).replace("/",""))
+        print os.getcwd()
+    except Exception as ex:
+        print(str(ex))
+        break
     
     try:    
         print " "
@@ -42,13 +43,14 @@ for rep_name in repos:
         repos_request = req.get(repos_url)
 
         while(int(repos_request.status_code)!=200):
-            ratereq=(req.get('https://api.github.com/rate_limit') ).json()
-            date=float(ratereq['resources']['search']['reset'])
-            print('reset time: ', datetime.datetime.fromtimestamp(date).strftime('%Y-%m-%d %H:%M:%S'))
-            print('curr time: ', datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+        #    ratereq=(req.get('https://api.github.com/rate_limit') ).json()
+        #    date=float(ratereq['resources']['search']['reset'])
+        #    print('reset time: ', datetime.datetime.fromtimestamp(date).strftime('%Y-%m-%d %H:%M:%S'))
+        #    print('curr time: ', datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
             
             
-            time.sleep(date-time.time()+AheadUCT)
+        #    time.sleep(date-time.time()+AheadUCT)
+            time.sleep(0.5)
             repos_request = req.get(repos_url)
 
         print(repos_request.headers['X-RateLimit-Remaining'])
@@ -61,16 +63,27 @@ for rep_name in repos:
             code_url=(j['git_url'])
             #print(code_url)
 
-##            code_req=req.get(code_url)
-##            code_request_json=code_req.json()
-##            code=base64.b64decode(code_request_json['content'])
-##            
-##            code_name=j['name']
-##            
-##            #Writes code files
-##            with open(code_name, 'w') as file:
-##                file.write(code)
-##        
+            code_req=req.get(code_url)
+            while(int(code_req.status_code)!=200):
+            #    ratereq=(req.get('https://api.github.com/rate_limit') ).json()
+            #    date=float(ratereq['resources']['search']['reset'])
+            #    print('reset time: ', datetime.datetime.fromtimestamp(date).strftime('%Y-%m-%d %H:%M:%S'))
+            #    print('curr time: ', datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+            
+            
+            #    time.sleep(date-time.time()+AheadUCT)
+                #time.sleep(0.5);
+                code_req=req.get(code_url)
+             
+            code_request_json=code_req.json()
+            code=base64.b64decode(code_request_json['content'])
+            
+            code_name=j['name']
+            
+            #Writes code files
+            with open(code_name, 'w') as file:
+                file.write(code)
+        
             
     except Exception as e:
         print(str(e))
@@ -78,5 +91,6 @@ for rep_name in repos:
         continue
     
     
+
 
 
