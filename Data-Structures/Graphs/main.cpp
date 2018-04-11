@@ -13,5 +13,12 @@ int main(int argc,char* argv[]){
 		G.printVertLabels();
 		G.insertE("v1","a",3);
 		G.printGraph();
+
+		cout<<"\nIs empty: "<<G.isEmpty();
+		cout<<"\nIs complete: "<<G.isComplete();
+		G.removeE("v1","a");
+		G.printGraph();
+		G.removeE("v1","v1");
+		G.printGraph();
 	cout<<"\n";
 }

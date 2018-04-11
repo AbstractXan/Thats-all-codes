@@ -129,3 +129,48 @@ void Graph::printVertLabels()
 	}
 	cout<<"\n";
 }
+
+bool Graph::isEmpty()
+{
+	if(Label.size()==0)
+	{
+		return true;
+	}
+	return false;
+}
+
+//If each pair of vertex has atleast one edge (self-loops not included)
+bool Graph::isComplete()
+{
+	for(int i=0;i<vertices;i++){for(int j=0;j<vertices;j++){
+
+			if(i==j) continue;//Ignores self loops
+			if (Matrix[i][j]==0) return false;//If incomplete
+	
+	}}
+	return true;
+}
+
+void Graph::removeE(string a, string b)
+{
+
+	int a_index = search(a);
+	int b_index = search(b);
+
+	//If vertices not found
+	if(a_index<0 || b_index<0)
+	{
+		cout<<"\nEither of the vertices donot exist.\n";
+		return;
+	}
+
+	cout<<"\n";
+	Matrix[a_index][b_index]=0;
+	Matrix[b_index][a_index]=0;
+
+	edges--;
+}
+
+int Graph::vertex_count(){ return vertices;}
+int Graph::edge_count(){return edges;}
+
