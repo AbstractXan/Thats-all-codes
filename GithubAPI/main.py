@@ -4,6 +4,7 @@ import time
 import base64
 import os
 import datetime
+import re
 
 AheadUCT=19800 #If your Local time is ahead UCT (in sec)
 
@@ -24,6 +25,8 @@ for i in temp1:
 #Acceses code in repository
 for rep_name in repos:       
     try:
+        Rep_throws=0
+        Rep_catch=0
 ##
 ##        #Change directory to add codes for each repositories
         os.chdir(curr_dir)
@@ -84,6 +87,18 @@ for rep_name in repos:
             with open(code_name, 'w') as file:
                 file.write(code)
         
+            throws=[]
+            catch=[]
+            
+            throws=re.findall(r'throws',code)
+            catch=re.findall(r'catch',code)
+            
+            Rep_throws=Rep_throws+len(throws)
+            Rep_catch=Rep_catch+len(catch)
+
+            with open('stats', 'w') as stat:
+                stat.write('Throws: '+str(Rep_throws))
+                stat.write('Catches: '+str(Rep_catch))
             
     except Exception as e:
         print(str(e))
@@ -91,6 +106,3 @@ for rep_name in repos:
         continue
     
     
-
-
-
