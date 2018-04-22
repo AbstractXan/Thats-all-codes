@@ -103,43 +103,12 @@ void Graph::printDFS(int i)
 
 void Graph::printStronglyConnected()
 {
-	int k;
-	for(int i=0; i<n;i++)
-	{
-	for(int j=0;j<n;j++){		//For every destination
-			if(i==j)
-				continue;
-				
-			if(Adj[i][j]!=0&&Adj[j][i]==0)
-			{
-				dir=true;
-				k++;
-				cout<<"\nStrongly connected: ";
-				cout<<i<<" -> ";
-				RecursiveStrongConnect(j); //If strongly connected
-			}
-		}
-	
-	}
-	cout<<"\n"<<k<<" strongly connected components found\n";
-	cout<<endl;
+
 }
 
 
 void Graph::RecursiveStrongConnect(int i)
-{	temp_depth++;
-	cout<<i;
-	for(int j=0; j<n; j++)	
-	{
-		if(i==j)
-			continue;
-		if(Adj[i][j]!=0&&Adj[j][i]==0)
-		{
-			cout<<" -> ";
-			RecursiveStrongConnect(j);
-		}
-		
-	}
+{	
 }
 
 //Prints current edge visit state
@@ -161,62 +130,15 @@ bool Graph::isCycle()
 {
 	
 	
-	cout<<"\nPrinting DFS: ";
-	for(int i=0;i<n;i++)
-	{
-		if(VertVisit[i]==false)
-		{
-			if(i>0 && stronglyConnected()==false)
-				connected=false;	//If not undirected , not travered in the first go, not connected
-				
-			temp_depth=0;
-			cout<<"\nTaking root "<<i<<" : ";
-			
-			if(!stronglyConnected())
-				printDFS(i);	
-			else
-				RecursiveStrongConnect(i);
-			
-			if(max_depth<temp_depth)
-			{
-				max_depth=temp_depth;
-			}
-
-		}
-	}
-	
-	if(temp_depth<3)
-	return false;
-	
-	for(int i=0;i<n;i++){
-		for(int j=0;j<n;j++){
-			if(Adj[i][j]!=0 && EdgeVisit[i][j]==0)
-			{
-				return true;
-			}
-		}
-		
-	}
-	return false;
-
 }
 
 bool Graph::stronglyConnected()
 {
-	for(int i=0;i<n;i++){
-		for(int j=0;j<n;j++){
-			if(Adj[i][j]!=0 && Adj[j][i]!=0)
-			{
-				return false;
-			}
-		}
-		
-	}
-	return true;
 }
 
 void Graph::maxdepth()
 {
+	//-NOT SURE IF CORRECT
 	if(connected==false)
 	{
 		cout<<"Diameter : Infinite\n";
@@ -228,26 +150,6 @@ void Graph::maxdepth()
 
 void Graph::rad()
 {
-	cout<<"\n";
-	for(int i=0;i<n;i++)
-	{
-		
-		temp_depth=0;
-		if(!stronglyConnected())
-			printDFS(i);	
-		else
-			RecursiveStrongConnect(i);
-			
-		if(max_depth<temp_depth)
-			{
-				max_depth=temp_depth;
-			}
-		if(radius>temp_depth)
-			{
-				radius=temp_depth;
-			}
 
-	}
-	cout<<"\nThe radius is : "<<radius;
 }
 
