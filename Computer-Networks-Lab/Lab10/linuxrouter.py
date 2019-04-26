@@ -36,6 +36,13 @@ def quizNet():
     
 
     net.start()
+    net['h1']('mosquitto -p 8000 &')
+    net['h2']('python CS16B021_sub1 &')
+    net['h3']('python CS16B021_sub2')
+    net['h4']('python CS16B021_sub3')
+    net['h5']('python CS16B021_sub4')
+    net['h6']('python CS16B021_sub5')
+    net['h7']('python CS16B021_pub1')
     CLI(net)
     net.stop()
 
